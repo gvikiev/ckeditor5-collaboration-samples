@@ -57,3 +57,7 @@ This repository contains code samples and example integrations of [CKEditor 5 co
 ## License
 
 For license details see: [LICENSE.md](https://github.com/cksource/ckeditor5-collaboration-samples/blob/master/LICENSE.md).
+
+For WebSocketUrl we use preQA server of CK editor collaboration server
+TokenUrl: http://127.1.0.1:50500/token.txt by using Live Server
+DocumentChanelId: PrId3000IAId2820Title_en-gb_b790

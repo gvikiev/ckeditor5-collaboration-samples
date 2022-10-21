@@ -244,4 +244,5 @@ MultiRootEditor.defaultConfig = {
 	}
 };
 
-export default { MultiRootEditor, EditorWatchdog, CKBox };
+const CKEditorCS = MultiRootEditor;
+export default { CKEditorCS, EditorWatchdog, CKBox };
