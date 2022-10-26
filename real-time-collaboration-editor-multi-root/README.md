@@ -44,3 +44,12 @@ Note: The application supports JavaScript, PostCSS and SVG imports.
 See the [CKEditor 5 Installing plugins guide](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/installing-plugins.html) to learn more.
 
 The build process uses the webpack configuration from `webpack.config.js`. If you are familiar with webpack, you can play with this file to achieve a custom build that would fit your needs. You can check the [CKEditor 5 Advanced setup guide](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/advanced-setup.html#webpack-configuration) for some ready-to-use advanced configurations.
+
+## Comments for updates
+
+Run parameters for preQA env.: 
+- For WebSocketUrl we use preQA server of CK editor collaboration server
+- For token endpoint we use the following TokenUrl: http://127.1.0.1:50500/token.txt by using Live Server and stored ck editor token in token.txt file
+- Format of document changel id has to be appropriate as it is DocumentChanelId: PrId3000IAId2820Title_en-gb_b790
+
+
