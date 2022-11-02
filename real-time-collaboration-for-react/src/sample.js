@@ -187,74 +187,6 @@ export default class Sample extends Component {
 
 		const cloudServicesConfig = this.props.configuration;
         
-        var monthNames = [
-			"January", "February", "March", "April", "May", "June", "July",
-			"August", "September", "October", "November", "December"
-		  ];
-		  var dayOfWeekNames = [
-			"Sunday", "Monday", "Tuesday",
-			"Wednesday", "Thursday", "Friday", "Saturday"
-		  ];
-
-		  function formatDate(date, patternStr){
-			  if (!patternStr) {
-				  patternStr = 'M/d/yyyy';
-			  }
-			  var day = date.getDate(),
-				  month = date.getMonth(),
-				  year = date.getFullYear(),
-				  hour = date.getHours(),
-				  minute = date.getMinutes(),
-				  second = date.getSeconds(),
-				  miliseconds = date.getMilliseconds(),
-				  h = hour % 12,
-				  hh = twoDigitPad(h),
-				  HH = twoDigitPad(hour),
-				  mm = twoDigitPad(minute),
-				  ss = twoDigitPad(second),
-				  aaa = hour < 12 ? 'AM' : 'PM',
-				  EEEE = dayOfWeekNames[date.getDay()],
-				  EEE = EEEE.substr(0, 3),
-				  dd = twoDigitPad(day),
-				  M = month + 1,
-				  MM = twoDigitPad(M),
-				  MMMM = monthNames[month],
-				  MMM = MMMM.substr(0, 3),
-				  yyyy = year + "",
-				  yy = yyyy.substr(2, 2)
-			  ;
-			  // checks to see if month name will be used
-			  patternStr = patternStr
-				.replace('hh', hh).replace('h', h)
-				.replace('HH', HH).replace('H', hour)
-				.replace('mm', mm).replace('m', minute)
-				.replace('ss', ss).replace('s', second)
-				.replace('S', miliseconds)
-				.replace('dd', dd).replace('d', day)
-				
-				.replace('EEEE', EEEE).replace('EEE', EEE)
-				.replace('yyyy', yyyy)
-				.replace('yy', yy)
-				.replace('aaa', aaa);
-			  if (patternStr.indexOf('MMM') > -1) {
-				  patternStr = patternStr
-					.replace('MMMM', MMMM)
-					.replace('MMM', MMM);
-			  }
-			  else {
-				  patternStr = patternStr
-					.replace('MM', MM)
-					.replace('M', M);
-			  }
-			  return patternStr;
-		  }
-		  function twoDigitPad(num) {
-			  return num < 10 ? "0" + num : num;
-		  }
-	
-
-		console.log("Start editor time:", formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss.S'));
-
 		return (
 			<div className="row row-editor">
 				{ /* Do not render the <CKEditor /> component before the layout is ready. */ }
@@ -262,9 +194,6 @@ export default class Sample extends Component {
 					<CKEditor
 						onReady={ editor => {
 							console.log( 'Editor is ready to use!', editor );
-
-							console.log("Ready editor time:", formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss.S'));
-
 							// Switch between inline and sidebar annotations according to the window size.
 							this.boundRefreshDisplayMode = this.refreshDisplayMode.bind( this, editor );
 							// Prevent closing the tab when any action is pending.
@@ -278,69 +207,68 @@ export default class Sample extends Component {
 						editor={ ClassicEditor }
 						config={ {
 							plugins: [
-								 Alignment,
-								 Autoformat,
-								 BlockQuote,
-								 Bold,
-								//  CKBoxPlugin,
-								//  PictureEditing,
-								 CloudServices,
-								 Comments,
-								 Essentials,
-								 FontFamily,
-								 FontSize,
-								 Heading,
-								 Highlight,
-								//  Image,
-								//  ImageCaption,
-								//  ImageResize,
-								//  ImageStyle,
-								//  ImageToolbar,
-								//  ImageUpload,
-								 Italic,
-								 Link,
-								 List,
-								//  MediaEmbed,
-								 Paragraph,
-								 PasteFromOffice,
-								 PresenceList,
-								 RealTimeCollaborativeComments,
-								 RealTimeCollaborativeTrackChanges,
-								 RemoveFormat,
-								 Strikethrough,
-								 //Table,
-								 //TableToolbar,
-								 TrackChanges,
-								 Underline
+								Heading,// comment out this line and running the build will make error mapping-model-position-view-parent-not-found disappear
+								CloudServices,
+								PresenceList,
+								Comments,
+								RealTimeCollaborativeComments,
+								RealTimeCollaborativeTrackChanges,
+								TrackChanges,
+								 // Alignment,
+								 // Autoformat,
+								 // BlockQuote,
+								 // Bold,
+								 // CKBoxPlugin,
+								 // PictureEditing,
+								// Essentials,
+								 // FontFamily,
+								 // FontSize,
+								// Highlight,
+								 // Image,
+								 // ImageCaption,
+								 // ImageResize,
+								 // ImageStyle,
+								 // ImageToolbar,
+								 // ImageUpload,
+								 // Italic,
+								 // Link,
+								 // List,
+								 // MediaEmbed,
+								 // Paragraph,
+								 // PasteFromOffice,
+								// RemoveFormat,
+								// Table,
+								 // TableToolbar,
+								// Underline
 							],
 							toolbar: [
-								'heading',
-								'|',
-								'fontsize',
-								 'fontfamily',
-								 '|',
-								 'bold',
-								 'italic',
-								 'underline',
-								 'strikethrough',
-								 'removeFormat',
-								 'highlight',
-								 '|',
-								'alignment',
-								 '|',
-								 'numberedList',
-								 'bulletedList',
-								 '|',
-								 'undo',
-								 'redo',
-								 '|',
-								 'comment',
-								 'trackChanges',
-								 '|',
+								// 'heading',
+								// 'strikethrough',
+								//  '|',
+								'comment',
+								'trackChanges',
+								// '|',
+								// 'fontsize',
+								//  'fontfamily',
+								//  '|',
+								//  'bold',
+								//  'italic',
+								//  'underline',
+								//  'removeFormat',
+								//  'highlight',
+								//  '|',
+								// 'alignment',
+								//  '|',
+								//  'numberedList',
+								//  'bulletedList',
+								//  '|',
+								//  'undo',
+								//  'redo',
+								 // '|',
 								//  'ckbox',
 								//  'imageUpload',
-								 'link',
-								 'blockquote',
+								//  'link',
+								//  'blockquote',
 								 //'insertTable',
 								//  'mediaEmbed'
 							],
@@ -383,11 +311,11 @@ export default class Sample extends Component {
 							presenceList: {
 								container: this.presenceListElementRef.current
 							},
-							comments: {
-								editorConfig: {
-									extraPlugins: [ Bold, Italic, Underline, List, Autoformat ]
-								}
-							}
+							// comments: {
+							// 	editorConfig: {
+							// 		extraPlugins: [ Bold, Italic, Underline, List, Autoformat ]
+							// 	}
+							// }
 						} }
 						data={ initialData }
 					/>
