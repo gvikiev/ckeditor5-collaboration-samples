@@ -10,7 +10,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
 
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import CKBoxPlugin from '@ckeditor/ckeditor5-ckbox/src/ckbox';
 import PictureEditing from '@ckeditor/ckeditor5-image/src/pictureediting.js';
@@ -204,7 +203,8 @@ export default class Sample extends Component {
 								 Paragraph,
 								Table,
 								 TableToolbar,
-								Underline
+								Underline,
+								CKBoxPlugin
 							],
 							toolbar: [
 								'heading',
