@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import ConfigurationDialog from './configuration-dialog';
 import Sample from './sample';
 
+
 export default class App extends Component {
 	state = {
 		configuration: null

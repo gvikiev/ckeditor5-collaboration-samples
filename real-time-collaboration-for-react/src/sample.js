@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { CKEditor, CKEditorContext } from '@ckeditor/ckeditor5-react';
 
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
@@ -15,10 +15,7 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import CKBoxPlugin from '@ckeditor/ckeditor5-ckbox/src/ckbox';
 import PictureEditing from '@ckeditor/ckeditor5-image/src/pictureediting.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily';
-import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
 import Image from '@ckeditor/ckeditor5-image/src/image';
 import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
@@ -27,12 +24,9 @@ import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link';
+import { NavLink } from "react-router-dom";
 import List from '@ckeditor/ckeditor5-list/src/list';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
@@ -47,69 +41,27 @@ import PresenceList from '@ckeditor/ckeditor5-real-time-collaboration/src/presen
 
 import * as CKBox from 'ckbox';
 import 'ckbox/dist/styles/ckbox.css';
+import CloudServicesCommentsAdapter from '@ckeditor/ckeditor5-real-time-collaboration/src/realtimecollaborativecomments/cloudservicescommentsadapter'
+import CommentsRepository from '@ckeditor/ckeditor5-comments/src/comments/commentsrepository'
+import NarrowSidebar from '@ckeditor/ckeditor5-comments/src/annotations/narrowsidebar'
+import WideSidebar from '@ckeditor/ckeditor5-comments/src/annotations/widesidebar'
+import ContextBase from '@ckeditor/ckeditor5-core/src/context'
+
+
+/* CKECollabContext -------------------------> */
+class CKECollabContext extends ContextBase {}
+
+CKECollabContext.builtinPlugins = [
+	CloudServicesCommentsAdapter,
+	CloudServices,
+	CommentsRepository,
+	NarrowSidebar,
+	WideSidebar,
+	PresenceList
+]
 
 const initialData = `
 	<h2>Bilingual Personality Disorder</h2>
-
-	<figure class="image image-style-side">
-		<img src="https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder.jpg" srcset="https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder.jpg, https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder_2x.jpg 2x">
-		<figcaption>
-			One language, one person.
-		</figcaption>
-	</figure>
-
-	<p>
-		This may be the first time you hear about this made-up disorder but it actually isn’t so far from the truth. Even the studies
-		that were conducted almost half a century show that <strong>the language you speak has more effects on you than you realize</strong>.
-	</p>
-	<p>
-		One of the very first experiments conducted on this topic dates back to 1964.
-		<a href="https://www.researchgate.net/publication/9440038_Language_and_TAT_content_in_bilinguals">In the experiment</a>
-		designed by linguist Ervin-Tripp who is an expert in psycholinguistic and sociolinguistic studies, adults who are bilingual
-		in English in French were showed series of pictures and were asked to create 3-minute stories. In the end participants emphasized
-		drastically different dynamics for stories in English and French.
-	</p>
-	<p>
-		Another ground-breaking experiment which included bilingual Japanese women married to American men in San Francisco were asked
-		to complete sentences. The goal of the experiment was to investigate whether or not human feelings and thoughts are expressed
-		differently in <strong>different language mindsets</strong>.
-	</p>
-	<p>Here is a sample from the the experiment:</p>
-
-	<table>
-		<thead>
-			<tr>
-				<th></th>
-				<th>English</th>
-				<th>Japanese</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Real friends should</td>
-				<td>Be very frank</td>
-				<td>Help each other</td>
-			</tr>
-			<tr>
-				<td>I will probably become</td>
-				<td>A teacher</td>
-				<td>A housewife</td>
-			</tr>
-			<tr>
-				<td>When there is a conflict with family</td>
-				<td>I do what I want</td>
-				<td>It's a time of great unhappiness</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<p>
-		More recent <a href="https://books.google.pl/books?id=1LMhWGHGkRUC">studies</a> show, the language a person speaks affects
-		their cognition, behavior, emotions and hence <strong>their personality</strong>. This shouldn’t come as a surprise
-		<a href="https://en.wikipedia.org/wiki/Lateralization_of_brain_function">since wealready know</a> that different regions
-		of the brain become more active depending on the person’s activity at hand. The structure, information and especially
-		<strong>the culture</strong> of languages varies substantially and the language a person speaks is an essential element of daily life.
-	</p>
 `;
 
 export default class Sample extends Component {
@@ -141,6 +93,9 @@ export default class Sample extends Component {
 							<p>
 								Open this sample in another browser tab to start real-time collaborative editing.
 							</p>
+							<div>
+								<NavLink to={`page2`}>page2</NavLink>
+							</div>
 						</div>
 					</div>
 
@@ -186,11 +141,30 @@ export default class Sample extends Component {
 		// You should contact CKSource to get the CloudServices configuration.
 
 		const cloudServicesConfig = this.props.configuration;
+		 console.log('cloudServicesConfig',cloudServicesConfig);
         
 		return (
 			<div className="row row-editor">
+
 				{ /* Do not render the <CKEditor /> component before the layout is ready. */ }
 				{ this.state.isLayoutReady && (
+					<CKEditorContext
+						config={{
+							cloudServices: {
+								tokenUrl: cloudServicesConfig.tokenUrl,
+								webSocketUrl: cloudServicesConfig.webSocketUrl,
+								bundleVersion: '35.1.0.1'
+							},
+							collaboration: { channelId: 'test'},
+							sidebar: {
+								container: this.sidebarElementRef.current
+							},
+							presenceList: {
+								container: this.presenceListElementRef.current
+							},
+						}}
+						context={CKECollabContext}
+					>
 					<CKEditor
 						onReady={ editor => {
 							console.log( 'Editor is ready to use!', editor );
@@ -207,118 +181,93 @@ export default class Sample extends Component {
 						editor={ ClassicEditor }
 						config={ {
 							plugins: [
-								Heading,// comment out this line and running the build will make error mapping-model-position-view-parent-not-found disappear
+								 Heading,// comment out this line and running the build will make error mapping-model-position-view-parent-not-found disappear
 								CloudServices,
 								PresenceList,
 								Comments,
 								RealTimeCollaborativeComments,
 								RealTimeCollaborativeTrackChanges,
 								TrackChanges,
-								 // Alignment,
-								 // Autoformat,
-								 // BlockQuote,
-								 // Bold,
-								 // CKBoxPlugin,
-								 // PictureEditing,
-								// Essentials,
-								 // FontFamily,
-								 // FontSize,
-								// Highlight,
-								 // Image,
-								 // ImageCaption,
-								 // ImageResize,
-								 // ImageStyle,
-								 // ImageToolbar,
-								 // ImageUpload,
-								 // Italic,
-								 // Link,
-								 // List,
-								 // MediaEmbed,
-								 // Paragraph,
-								 // PasteFromOffice,
-								// RemoveFormat,
-								// Table,
-								 // TableToolbar,
-								// Underline
+								 Alignment,
+								 Autoformat,
+								 Bold,
+								 PictureEditing,
+								Essentials,
+								 Image,
+								 ImageCaption,
+								 ImageResize,
+								 ImageStyle,
+								 ImageToolbar,
+								 ImageUpload,
+								 Italic,
+								 Link,
+								 Paragraph,
+								Table,
+								 TableToolbar,
+								Underline
 							],
 							toolbar: [
-								// 'heading',
-								// 'strikethrough',
-								//  '|',
+								'heading',
+								 '|',
 								'comment',
 								'trackChanges',
-								// '|',
-								// 'fontsize',
-								//  'fontfamily',
-								//  '|',
-								//  'bold',
-								//  'italic',
-								//  'underline',
-								//  'removeFormat',
-								//  'highlight',
-								//  '|',
-								// 'alignment',
-								//  '|',
-								//  'numberedList',
-								//  'bulletedList',
-								//  '|',
-								//  'undo',
-								//  'redo',
-								 // '|',
-								//  'ckbox',
-								//  'imageUpload',
-								//  'link',
-								//  'blockquote',
-								 //'insertTable',
-								//  'mediaEmbed'
+								'|',
+								 'bold',
+								 'italic',
+								 '|',
+								'alignment',
+								 '|',
+								 'imageUpload',
+								 'link',
+								 'insertTable',
 							],
 							cloudServices: {
 								tokenUrl: cloudServicesConfig.tokenUrl,
-								webSocketUrl: cloudServicesConfig.webSocketUrl
+								webSocketUrl: cloudServicesConfig.webSocketUrl,
+								bundleVersion: '35.1.0.1'
 							},
+
 							collaboration: {
 								channelId: cloudServicesConfig.channelId
 							},
-							// ckbox: {
-							// 	tokenUrl: cloudServicesConfig.ckboxTokenUrl || cloudServicesConfig.tokenUrl
-							// },
-							// image: {
-							// 	toolbar: [
-							// 		'imageStyle:inline',
-							// 		'imageStyle:block',
-							// 		'imageStyle:side',
-							// 		'|',
-							// 		'toggleImageCaption',
-							// 		'imageTextAlternative',
-							// 		'|',
-							// 		'comment'
-							// 	]
-							// },
-							// table: {
-							// 	contentToolbar: [
-							// 		'tableColumn',
-							// 		'tableRow',
-							// 		'mergeTableCells'
-							// 	],
-							// 	tableToolbar: [ 'comment' ]
-							// },
-							// mediaEmbed: {
-							// 	toolbar: [ 'comment' ]
-							// },
+							ckbox: {
+								tokenUrl: cloudServicesConfig.ckboxTokenUrl || cloudServicesConfig.tokenUrl
+							},
+							image: {
+								toolbar: [
+									'imageStyle:inline',
+									'imageStyle:block',
+									'imageStyle:side',
+									'|',
+									'toggleImageCaption',
+									'imageTextAlternative',
+									'|',
+									'comment'
+								]
+							},
+							table: {
+								contentToolbar: [
+									'tableColumn',
+									'tableRow',
+									'mergeTableCells'
+								],
+								tableToolbar: [ 'comment' ]
+							},
 							sidebar: {
 								container: this.sidebarElementRef.current
 							},
 							presenceList: {
 								container: this.presenceListElementRef.current
 							},
-							// comments: {
-							// 	editorConfig: {
-							// 		extraPlugins: [ Bold, Italic, Underline, List, Autoformat ]
-							// 	}
-							// }
+							comments: {
+								editorConfig: {
+									extraPlugins: [ Bold, Italic, Underline, List, Autoformat ]
+								}
+							}
 						} }
 						data={ initialData }
 					/>
+					</CKEditorContext>
 				) }
 				<div ref={ this.sidebarElementRef } className="sidebar"></div>
 			</div>

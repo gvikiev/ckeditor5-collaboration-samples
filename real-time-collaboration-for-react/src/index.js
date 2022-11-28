@@ -7,4 +7,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
 
-ReactDOM.render( <App />, document.getElementById( 'root' ) );
+import {
+	createBrowserRouter,
+	RouterProvider,
+} from "react-router-dom";
+import ErrorPage from './error-page'
+
+
+
+
+const router = createBrowserRouter([
+	{
+		path: "/ckeditor5-collaboration-samples-fork/real-time-collaboration-for-react/samples/real-time-collaboration-for-react.html",
+		element: <App/>,
+		errorElement:<ErrorPage />
+	},
+	{
+		path: "/ckeditor5-collaboration-samples-fork/real-time-collaboration-for-react/samples/real-time-collaboration-for-react.html/page2",
+		element: (<div>page2</div>),
+		errorElement:<ErrorPage />
+	},
+]);
+
+ReactDOM.render( <React.StrictMode>
+	<RouterProvider router={router} />
+</React.StrictMode>, document.getElementById( 'root' ) );
