@@ -140,7 +140,6 @@ export default class Sample extends Component {
 		// You should contact CKSource to get the CloudServices configuration.
 
 		const cloudServicesConfig = this.props.configuration;
-		 console.log('cloudServicesConfig',cloudServicesConfig);
         
 		return (
 			<div className="row row-editor">
