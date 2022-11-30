@@ -21,12 +21,7 @@ const router = createBrowserRouter([
 		path: "/ckeditor5-collaboration-samples-fork/real-time-collaboration-for-react/samples/real-time-collaboration-for-react.html",
 		element: <App/>,
 		errorElement:<ErrorPage />
-	},
-	{
-		path: "/ckeditor5-collaboration-samples-fork/real-time-collaboration-for-react/samples/real-time-collaboration-for-react.html/page2",
-		element: (<div>page2</div>),
-		errorElement:<ErrorPage />
-	},
+	}
 ]);
 
 ReactDOM.render( <React.StrictMode>

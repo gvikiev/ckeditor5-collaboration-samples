@@ -73,6 +73,14 @@ export default class Sample extends Component {
 
 	sidebarElementRef = React.createRef();
 	presenceListElementRef = React.createRef();
+	ref = React.createRef();
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if(this.ref){
+			 console.log('this.ref.current.editor',this.ref.current.editor);
+		}
+	}
+
 
 	componentDidMount() {
 		window.CKBox = CKBox;
@@ -92,9 +100,6 @@ export default class Sample extends Component {
 							<p>
 								Open this sample in another browser tab to start real-time collaborative editing.
 							</p>
-							<div>
-								<NavLink to={`page2`}>page2</NavLink>
-							</div>
 						</div>
 					</div>
 
@@ -164,6 +169,7 @@ export default class Sample extends Component {
 						context={CKECollabContext}
 					>
 					<CKEditor
+						ref={this.ref}
 						onReady={ editor => {
 							console.log( 'Editor is ready to use!', editor );
 							// Switch between inline and sidebar annotations according to the window size.
