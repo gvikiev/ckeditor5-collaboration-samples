@@ -76,7 +76,7 @@ export default class Sample extends Component {
 	ref = React.createRef();
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		if(this.ref){
+		if(this.ref && this.ref.current){
 			 console.log('this.ref.current.editor',this.ref.current.editor);
 		}
 	}
