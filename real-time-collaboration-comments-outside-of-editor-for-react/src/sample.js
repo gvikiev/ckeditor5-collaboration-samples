@@ -22,9 +22,16 @@ export default class Sample extends React.Component {
 	sidebarElementRef = React.createRef();
 	presenceListElementRef = React.createRef();
 	controlsRef = React.createRef();
+	ref = React.createRef();
 
 	// Prevent closing the tab when any action is pending.
 	boundCheckPendingActions = this.checkPendingActions.bind( this );
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if(this.ref && this.ref.current){
+			console.log('this.ref.current.watchdog.editor',this.ref.current.watchdog.editor);
+		}
+	}
 
 	componentDidMount() {
 		window.CKBox = EditorClassicBuild.CKBox;
@@ -119,6 +126,8 @@ export default class Sample extends React.Component {
 								<div className="row row-editor">
 									{ this.state.isLayoutReady && (
 										<CKEditor
+											ref={this.ref}
+
 											onReady={ editor => {
 												console.log( 'Editor 1 is ready to use!', editor );
 											} }

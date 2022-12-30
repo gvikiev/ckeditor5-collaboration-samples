@@ -68,7 +68,8 @@ export default class Sample extends Component {
 		// You need this state to render the <CKEditor /> component after the layout is ready.
 		// <CKEditor /> needs HTMLElements of `Sidebar` and `PresenceList` plugins provided through
 		// the `config` property and you have to ensure that both are already rendered.
-		isLayoutReady: false
+		isLayoutReady: false,
+		show:true
 	};
 
 	sidebarElementRef = React.createRef();
@@ -76,6 +77,7 @@ export default class Sample extends Component {
 	ref = React.createRef();
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
+		 console.log('this.ref',this.ref);
 		if(this.ref && this.ref.current){
 			 console.log('this.ref.current.editor',this.ref.current.editor);
 		}
@@ -107,6 +109,9 @@ export default class Sample extends Component {
 						<div className="row-presence">
 							<div ref={ this.presenceListElementRef } className="presence"></div>
 						</div>
+						<button onClick={()=>{
+							this.setState( { show: !this.state.show } )
+						}} >show/hidden CKE</button>
 						{ this.renderEditor() }
 					</div>
 				</main>
@@ -168,6 +173,10 @@ export default class Sample extends Component {
 						}}
 						context={CKECollabContext}
 					>
+					{this.state.show ? (
+						<>
+						<div>editor</div>
+							{/*<div>*/}
 					<CKEditor
 						ref={this.ref}
 						onReady={ editor => {
@@ -272,6 +281,11 @@ export default class Sample extends Component {
 						} }
 						data={ initialData }
 					/>
+							{/*</div>*/}
+						</>
+					):(
+						<div>hidden editor</div>
+					)}
 					</CKEditorContext>
 				) }
 				<div ref={ this.sidebarElementRef } className="sidebar"></div>

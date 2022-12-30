@@ -43,7 +43,7 @@
     "@ckeditor/ckeditor5-utils": "35.1.0",
     "@ckeditor/ckeditor5-watchdog": "35.1.0",
     "@ckeditor/ckeditor5-widget": "35.1.0",
-    "@ckeditor/ckeditor5-react": "5.0.2",
+    "@ckeditor/ckeditor5-react": "5.0.5",
     "ckbox": "^1.1.0",
     "ckeditor5": "35.1.0",
     "ckeditor5-collaboration": "35.1.0",
