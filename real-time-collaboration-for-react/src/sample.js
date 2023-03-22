@@ -20,6 +20,7 @@ import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
+import ImageTextAlternative from '@ckeditor/ckeditor5-image/src/imagetextalternative';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link';
@@ -69,45 +70,58 @@ export default class Sample extends Component {
 		// <CKEditor /> needs HTMLElements of `Sidebar` and `PresenceList` plugins provided through
 		// the `config` property and you have to ensure that both are already rendered.
 		isLayoutReady: false,
-		show:true
+		show:true,
+		rerender:false,
 	};
 
 	sidebarElementRef = React.createRef();
+	sidebarElementRef2 = React.createRef();
 	presenceListElementRef = React.createRef();
+	presenceListElementRef2 = React.createRef();
 	ref = React.createRef();
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		 console.log('this.ref',this.ref);
-		if(this.ref && this.ref.current){
-			 console.log('this.ref.current.editor',this.ref.current.editor);
-		}
+		 console.log('this.sidebarElementRef.current',this.sidebarElementRef.current);
+		 console.log('this.presenceListElementRef.current',this.presenceListElementRef.current);
+		// if(this.ref && this.ref.current){
+		// 	 console.log('this.ref.current.editor',this.ref.current.editor);
+		// }
 	}
 
 
 	componentDidMount() {
-		window.CKBox = CKBox;
+		// window.CKBox = CKBox;
 		// When the layout is ready you can switch the state and render the `<CKEditor />` component.
 		this.setState( { isLayoutReady: true } );
 	}
 
 	render() {
+		console.log('render')
+		if (this.state.isLayoutReady && !this.state.show) {
+			// debugger
+			// setTimeout(() => {
+			// 	this.setState((prevState) => !prevState)
+			// }, 10)
+		}
 		return (
 			<div className="App">
 				{ this.renderHeader() }
-
 				<main>
 					<div className="message">
 						<div className="centered">
+							rerender:{this.state.rerender}
 							<h2>CKEditor 5 React integration of classic editor with real-time collaboration</h2>
 							<p>
 								Open this sample in another browser tab to start real-time collaborative editing.
 							</p>
+							<NavLink to={`page2`}>page2</NavLink>
 						</div>
 					</div>
 
 					<div className="centered">
 						<div className="row-presence">
 							<div ref={ this.presenceListElementRef } className="presence"></div>
+
 						</div>
 						<button onClick={()=>{
 							this.setState( { show: !this.state.show } )
@@ -155,139 +169,140 @@ export default class Sample extends Component {
 			<div className="row row-editor">
 
 				{ /* Do not render the <CKEditor /> component before the layout is ready. */ }
-				{ this.state.isLayoutReady && (
+				{this.state.isLayoutReady && (
 					<CKEditorContext
 						config={{
 							cloudServices: {
 								tokenUrl: cloudServicesConfig.tokenUrl,
 								webSocketUrl: cloudServicesConfig.webSocketUrl,
-								bundleVersion: '35.1.0.1'
+								bundleVersion: '36.0.1.1'
 							},
-							collaboration: { channelId: 'test'},
+							collaboration: {channelId: 'test'},
 							sidebar: {
 								container: this.sidebarElementRef.current
 							},
 							presenceList: {
 								container: this.presenceListElementRef.current
-							},
+							}
 						}}
 						context={CKECollabContext}
 					>
-					{this.state.show ? (
-						<>
-						<div>editor</div>
-							{/*<div>*/}
-					<CKEditor
-						ref={this.ref}
-						onReady={ editor => {
-							console.log( 'Editor is ready to use!', editor );
-							// Switch between inline and sidebar annotations according to the window size.
-							this.boundRefreshDisplayMode = this.refreshDisplayMode.bind( this, editor );
-							// Prevent closing the tab when any action is pending.
-							this.boundCheckPendingActions = this.checkPendingActions.bind( this, editor );
+						{this.state.show ? (
+							<>
+								<div>editor</div>
+								<CKEditor
+									ref={this.ref}
+									onReady={editor => {
+										console.log('Editor is ready to use!', editor)
+										// // Switch between inline and sidebar annotations according to the window size.
+										// this.boundRefreshDisplayMode = this.refreshDisplayMode.bind( this, editor );
+										// // Prevent closing the tab when any action is pending.
+										// this.boundCheckPendingActions = this.checkPendingActions.bind( this, editor );
+										//
+										// window.addEventListener( 'resize', this.boundRefreshDisplayMode );
+										// window.addEventListener( 'beforeunload', this.boundCheckPendingActions );
+										// this.refreshDisplayMode( editor );
+									}}
+									onChange={(event, editor) => console.log({event, editor})}
+									editor={ClassicEditor}
+									config={{
+										plugins: [
+											Paragraph,
+											// Heading,// comment out this line and running the build will make error mapping-model-position-view-parent-not-found disappear
+											CloudServices,
+											PresenceList,
+											Comments,
+											RealTimeCollaborativeComments,
+											RealTimeCollaborativeTrackChanges,
+											TrackChanges,
+											Alignment,
+											Autoformat,
+											Bold,
+											PictureEditing,
+											Essentials,
+											Image,
+											ImageCaption,
+											ImageResize,
+											ImageStyle,
+											ImageToolbar,
+											ImageTextAlternative,
+											ImageUpload,
+											Italic,
+											Link,
+											Paragraph,
+											// Table,
+											//  TableToolbar,
+											Underline
+											// CKBoxPlugin
+										],
+										toolbar: [
+											// 'heading',
+											// '|',
+											'comment',
+											'trackChanges',
+											'|',
+											'bold',
+											'italic',
+											'|',
+											'alignment',
+											'|',
+											'imageUpload',
+											'link'
+											// 'insertTable',
+										],
+										cloudServices: {
+											tokenUrl: cloudServicesConfig.tokenUrl,
+											webSocketUrl: cloudServicesConfig.webSocketUrl,
+											bundleVersion: '36.0.1.1'
+										},
 
-							window.addEventListener( 'resize', this.boundRefreshDisplayMode );
-							window.addEventListener( 'beforeunload', this.boundCheckPendingActions );
-							this.refreshDisplayMode( editor );
-						} }
-						onChange={ ( event, editor ) => console.log( { event, editor } ) }
-						editor={ ClassicEditor }
-						config={ {
-							plugins: [
-								 Heading,// comment out this line and running the build will make error mapping-model-position-view-parent-not-found disappear
-								CloudServices,
-								PresenceList,
-								Comments,
-								RealTimeCollaborativeComments,
-								RealTimeCollaborativeTrackChanges,
-								TrackChanges,
-								 Alignment,
-								 Autoformat,
-								 Bold,
-								 PictureEditing,
-								Essentials,
-								 Image,
-								 ImageCaption,
-								 ImageResize,
-								 ImageStyle,
-								 ImageToolbar,
-								 ImageUpload,
-								 Italic,
-								 Link,
-								 Paragraph,
-								Table,
-								 TableToolbar,
-								Underline,
-								CKBoxPlugin
-							],
-							toolbar: [
-								'heading',
-								 '|',
-								'comment',
-								'trackChanges',
-								'|',
-								 'bold',
-								 'italic',
-								 '|',
-								'alignment',
-								 '|',
-								 'imageUpload',
-								 'link',
-								 'insertTable',
-							],
-							cloudServices: {
-								tokenUrl: cloudServicesConfig.tokenUrl,
-								webSocketUrl: cloudServicesConfig.webSocketUrl,
-								bundleVersion: '35.1.0.1'
-							},
-
-							collaboration: {
-								channelId: cloudServicesConfig.channelId
-							},
-							ckbox: {
-								tokenUrl: cloudServicesConfig.ckboxTokenUrl || cloudServicesConfig.tokenUrl
-							},
-							image: {
-								toolbar: [
-									'imageStyle:inline',
-									'imageStyle:block',
-									'imageStyle:side',
-									'|',
-									'toggleImageCaption',
-									'imageTextAlternative',
-									'|',
-									'comment'
-								]
-							},
-							table: {
-								contentToolbar: [
-									'tableColumn',
-									'tableRow',
-									'mergeTableCells'
-								],
-								tableToolbar: [ 'comment' ]
-							},
-							sidebar: {
-								container: this.sidebarElementRef.current
-							},
-							presenceList: {
-								container: this.presenceListElementRef.current
-							},
-							comments: {
-								editorConfig: {
-									extraPlugins: [ Bold, Italic, Underline, List, Autoformat ]
-								}
-							}
-						} }
-						data={ initialData }
-					/>
-							{/*</div>*/}
-						</>
-					):(
-						<div>hidden editor</div>
-					)}
+										collaboration: {
+											channelId: cloudServicesConfig.channelId
+										},
+										// ckbox: {
+										// 	tokenUrl: cloudServicesConfig.ckboxTokenUrl || cloudServicesConfig.tokenUrl
+										// },
+										image: {
+											toolbar: [
+												'imageStyle:inline',
+												'imageStyle:block',
+												'imageStyle:side',
+												'|',
+												'toggleImageCaption',
+												'imageTextAlternative',
+												'|',
+												'comment'
+											]
+										},
+										// table: {
+										// 	contentToolbar: [
+										// 		'tableColumn',
+										// 		'tableRow',
+										// 		'mergeTableCells'
+										// 	],
+										// 	tableToolbar: [ 'comment' ]
+										// },
+										sidebar: {
+											container: this.sidebarElementRef.current
+										},
+										presenceList: {
+											container: this.presenceListElementRef.current
+										},
+										comments: {
+											editorConfig: {
+												extraPlugins: [Bold, Italic, Underline, List, Autoformat]
+											}
+										}
+									}}
+									data={initialData}
+								/>
+								{/*</div>*/}
+							</>
+						) : (
+							<div>hidden editor</div>
+						)}
 					</CKEditorContext>
-				) }
+				)}
 				<div ref={ this.sidebarElementRef } className="sidebar"></div>
 			</div>
 		);

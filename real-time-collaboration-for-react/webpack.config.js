@@ -10,7 +10,7 @@
 const path = require( 'path' );
 const webpack = require( 'webpack' );
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
-const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
+const { CKEditorTranslationsPlugin } = require( '@ckeditor/ckeditor5-dev-translations' );
 const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 
 module.exports = {
@@ -41,7 +41,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new CKEditorWebpackPlugin( {
+		new CKEditorTranslationsPlugin( {
 			// UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
 			// When changing the built-in language, remember to also change it in the editor configuration (src/ckeditor.js).
 			language: 'en',
