@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md.
  */
 
@@ -22,16 +22,9 @@ export default class Sample extends React.Component {
 	sidebarElementRef = React.createRef();
 	presenceListElementRef = React.createRef();
 	controlsRef = React.createRef();
-	ref = React.createRef();
 
 	// Prevent closing the tab when any action is pending.
 	boundCheckPendingActions = this.checkPendingActions.bind( this );
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if(this.ref && this.ref.current){
-			console.log('this.ref.current.watchdog.editor',this.ref.current.watchdog.editor);
-		}
-	}
 
 	componentDidMount() {
 		window.CKBox = EditorClassicBuild.CKBox;
@@ -126,8 +119,6 @@ export default class Sample extends React.Component {
 								<div className="row row-editor">
 									{ this.state.isLayoutReady && (
 										<CKEditor
-											ref={this.ref}
-
 											onReady={ editor => {
 												console.log( 'Editor 1 is ready to use!', editor );
 											} }
@@ -170,7 +161,7 @@ export default class Sample extends React.Component {
 							<a href="https://ckeditor.com/ckeditor-5/" target="_blank" rel="noopener noreferrer">CKEditor 5</a> – Rich text editor of tomorrow, available today
 						</p>
 						<p>
-							Copyright © 2003-2022, <a href="https://cksource.com/" target="_blank" rel="noopener noreferrer">CKSource</a> Holding sp. z o.o. All rights reserved.
+							Copyright © 2003-2023, <a href="https://cksource.com/" target="_blank" rel="noopener noreferrer">CKSource</a> Holding sp. z o.o. All rights reserved.
 						</p>
 					</div>
 				</footer>
